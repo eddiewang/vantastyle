@@ -1,0 +1,197 @@
+@mixin font-face($name, $path, $weight: null, $style: null, $exts: eot woff2 woff ttf svg) {
+    $src: null;
+    $extmods: ( eot: "?", svg: "#" + str-replace($name, " ", "_"));
+    $formats: ( otf: "opentype", ttf: "truetype");
+    @each $ext in $exts {
+        $extmod: if(map-has-key($extmods, $ext), $ext + map-get($extmods, $ext), $ext);
+        $format: if(map-has-key($formats, $ext), map-get($formats, $ext), $ext);
+        $src: append($src, url(quote($path + "." + $extmod)) format(quote($format)), comma);
+    }
+    @font-face {
+        font-family: quote($name);
+        font-style: $style;
+        font-weight: $weight;
+        src: $src;
+    }
+}
+
+@include font-face("Akkurat",
+"../fonts/Akkurat",
+null,
+null,
+woff woff2);
+@include font-face("Menlo",
+"../fonts/menlo",
+null,
+null,
+woff);
+@include font-face("FuturaBT-Book",
+"../fonts/FuturaBT-Book",
+null,
+null,
+woff woff2);
+@import url('https://fonts.googleapis.com/css?family=PT+Serif');
+@include font-face("FuturaBT-Heavy",
+"../fonts/FuturaBT-Heavy",
+null,
+null,
+woff woff2);
+body {
+    background: $color-gray-5;
+}
+
+header {
+    padding: 10px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.07);
+    width: 100%;
+    left: 0;
+    top: 0;
+    background: $color-gray-95;
+    z-index: 300;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.flex {
+    align-items: center;
+}
+
+.header-logo {
+    flex-grow: 10;
+    color: $color-white;
+    text-align: center;
+}
+
+.header-nav {
+    display: flex;
+    ul {
+        margin: 0;
+    }
+    li {
+        display: inline-block;
+        text-decoration: none;
+        list-style: none;
+        margin: 0;
+    }
+    align-items: center;
+}
+
+a.header-link {
+    color: $color-gray-80;
+    line-height: 0;
+    text-decoration: none;
+    font-weight: 500;
+    padding-left: 10px;
+    margin-left: 30px;
+    &.active {
+        text-decoration: underline;
+    }
+}
+
+.content {
+    max-width: 740px;
+    padding-top: 50px;
+}
+
+section {
+    display: block;
+}
+
+.p1-serif {
+    font-size: $base-font-size;
+    line-height: 1.5;
+    color: $color-gray-90;
+    @include font-serif;
+    font-weight: 0;
+    @include medium {
+        font-size: 20px;
+    }
+}
+
+.card-title {
+    line-height: $card-container-header-height;
+    font-size: $card-title-font-size;
+    font-weight: 500;
+    color: $color-gray-90;
+}
+
+.title {
+    @include font-sans;
+    font-size: $card-title-font-size;
+    font-weight: 500;
+}
+
+.card>.section>.header>.tagged-title {
+    line-height: 50px !important;
+}
+
+.tag {
+    padding: 3px 8px;
+    margin-right: 4px;
+    background: $color-red;
+    color: $color-white;
+    font-weight: 500;
+    border-radius: 3px;
+}
+
+.wide {
+    margin-bottom: 80px;
+}
+
+footer {
+    padding: 30px 0;
+    background: $color-gray-15;
+}
+
+.breadcrumbs {
+    margin-top: 50px;
+    ul {
+        margin-bottom: 0;
+    }
+    li {
+        display: inline-block;
+    }
+}
+
+.breadcrumb-link {
+    &.active {
+        color: $color-red;
+    }
+}
+
+.button {
+    line-height: 0;
+}
+
+.text-white {
+    color: white;
+}
+
+.dark {
+    height: 100vh;
+    background: #111;
+    width: 100vw;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@-webkit-keyframes autofill {
+    to {
+        color: #666;
+        background: transparent;
+    }
+}
+
+input:-webkit-autofill {
+    -webkit-animation-name: autofill;
+    -webkit-animation-fill-mode: both;
+}
